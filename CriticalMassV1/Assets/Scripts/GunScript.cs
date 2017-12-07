@@ -40,10 +40,11 @@ public class GunScript : MonoBehaviour
 
     void Start()
     {
-       minSize = new Vector3(.2f, .2f, .2f);
+        LineRend.enabled = false;
+        minSize = new Vector3(.2f, .2f, .2f);
        ControlLayers = false;
        StaffANIM = Staff.GetComponent<Animator>();
-        LineRend.enabled = !LineRend.enabled;
+
     }
     void Update()
     {
@@ -60,42 +61,23 @@ public class GunScript : MonoBehaviour
         CheckSize();
         SetControlLayers();
         CheckControlLayer();
-        Size.value = CurrentSize.magnitude;
-        
+        Size.value = CurrentSize.magnitude;   
         if (Input.GetKeyDown(KeyCode.E))
         {
             ObjectHold();
             FreezeCube.Invoke();
             Debug.Log("HoldObj");
-
         }
         if (Input.GetKeyUp(KeyCode.E))
         {
-            Debug.Log("EndOBJHOLD");
-            
+            Debug.Log("EndOBJHOLD");         
         }
         else
         {
             Debug.Log("NoObject");
-        }
-
-      
+        }     
         PlaceItemDeactivated();
-      
-
-        if (isShooting == true && ControlLayers == false)
-        {
-            LineRend.enabled = true;
-            LineRend.SetPosition(0, StaffPoint.transform.position);
-            LineRend.SetPosition(1, OBJLOC);
-        }
-        if (isShooting == false && ControlLayers == true)
-        {
-            LineRend.enabled = !LineRend.enabled;
-            Debug.Log("NotShoot");
-
-        }
-
+        LaserCast();
     }
     void PlaceItemDeactivated()
     {
@@ -126,14 +108,11 @@ public class GunScript : MonoBehaviour
                 HeldItemSmall.transform.eulerAngles = new Vector3(0f, 0f, 0f);               
                 holdObjSmall = false;
                 PlaceCube.Invoke();
-
-
             }
             else
             {
                 Debug.Log("NoObject");
             }
-
         }
     }
     void SetControlLayers()
@@ -167,7 +146,7 @@ public class GunScript : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             UpSound.Invoke();
-            isShooting = true;
+         
         }
 
         if (Input.GetButton("Fire1"))
@@ -195,12 +174,13 @@ public class GunScript : MonoBehaviour
             StaffANIM.SetBool("TranGrowO", false);
             Wipe.Invoke();
             isShooting = false;
+            OBJLOC = StaffPoint.transform.localPosition;
 
         }
         if (Input.GetButtonDown("Fire2"))
         {
             DownSound.Invoke();
-            isShooting = true;
+           
 
         }
 
@@ -223,6 +203,7 @@ public class GunScript : MonoBehaviour
           
             Wipe.Invoke();
             isShooting = false;
+            OBJLOC = new Vector3(0f, 0f, 0f);
         }
     }
  
@@ -231,6 +212,7 @@ public class GunScript : MonoBehaviour
         RaycastHit GrowHit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out GrowHit, range, ScaleLayer_mask.value))
         {
+            isShooting = true;
             HitObject = GrowHit.transform.gameObject;
             OBJLOC = HitObject.transform.position;
             gameManager.GetComponent<GameManager>().MassAvailable -= GrowTime * MassSubMod;
@@ -248,6 +230,7 @@ public class GunScript : MonoBehaviour
         RaycastHit hit2;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit2, range, ScaleLayer_mask.value))
         {
+            isShooting = true;
             HitObject = hit2.transform.gameObject;
             OBJLOC = HitObject.transform.position;
             hit2.collider.gameObject.transform.localScale = Vector3.Lerp(hit2.collider.gameObject.transform.localScale, new Vector3(Shrink, Shrink, Shrink), Time.deltaTime * Shrinktime);
@@ -452,20 +435,21 @@ public class GunScript : MonoBehaviour
 
     void LaserCast()
     {
+        if (isShooting == true && ControlLayers == false)
+        {
+            LineRend.enabled = true;
+            LineRend.SetPosition(0, StaffPoint.transform.position);
+            LineRend.SetPosition(1, OBJLOC);
+
+
+        }
         if (isShooting == false)
         {
-            LineRend.enabled = !LineRend.enabled;
+            LineRend.enabled = false;
             Debug.Log("NotShoot");
 
         }
 
-        if (isShooting == true)
-        {  
-            LineRend.enabled = true;
-            LineRend.SetPosition(0, StaffPoint.transform.position);
-            LineRend.SetPosition(1, OBJLOC);
-        }
-          
     }
     
        
