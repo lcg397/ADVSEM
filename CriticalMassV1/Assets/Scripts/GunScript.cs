@@ -13,6 +13,7 @@ public class GunScript : MonoBehaviour
     public float GrowTime, Shrinktime, MassSubMod;
     public float PSshrink, PSgrow, PSgrowtime, PSshrinktime;
     public float mass;
+    public float StaffpointLOC;
     public GameObject gameManager;
     public GameObject CurrentItem, CurrentItemVisible, SpawnPoint, HeldItemSmall, HeldItemVisible;
     public Camera fpsCam;
@@ -36,19 +37,15 @@ public class GunScript : MonoBehaviour
     public GameObject StaffPoint;
     bool isShooting;
     Vector3 OBJLOC;
-
-
     void Start()
     {
-        LineRend.enabled = false;
-        minSize = new Vector3(.2f, .2f, .2f);
+       LineRend.enabled = false;
+       minSize = new Vector3(.2f, .2f, .2f);
        ControlLayers = false;
        StaffANIM = Staff.GetComponent<Animator>();
-
     }
     void Update()
     {
-
         TranGP = Staff.GetComponent<AnimationControlStaff>().ATranGP;
         TranGO = Staff.GetComponent<AnimationControlStaff>().ATranGO;
         TranSP = Staff.GetComponent<AnimationControlStaff>().ATranSP;
@@ -61,7 +58,17 @@ public class GunScript : MonoBehaviour
         CheckSize();
         SetControlLayers();
         CheckControlLayer();
-        Size.value = CurrentSize.magnitude;   
+        Size.value = CurrentSize.magnitude;
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
+        {
+            Debug.Log("Wheel");
+            StaffPoint.gameObject.transform.localPosition = new Vector3(StaffPoint.gameObject.transform.localPosition.x, StaffPoint.gameObject.transform.localPosition.y, StaffPoint.gameObject.transform.localPosition.z + StaffpointLOC);
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
+        {
+            Debug.Log("Wheel");
+            StaffPoint.gameObject.transform.localPosition = new Vector3(StaffPoint.gameObject.transform.localPosition.x, StaffPoint.gameObject.transform.localPosition.y, StaffPoint.gameObject.transform.localPosition.z - StaffpointLOC);
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             ObjectHold();
@@ -206,7 +213,6 @@ public class GunScript : MonoBehaviour
             OBJLOC = new Vector3(0f, 0f, 0f);
         }
     }
- 
     void ShootGrow()
     {
         RaycastHit GrowHit;
@@ -265,13 +271,12 @@ public class GunScript : MonoBehaviour
         HeldItemSmall.transform.parent = SpawnPoint.transform;
         HeldItemSmall.transform.localPosition = SpawnPoint.transform.localPosition;
         HeldItemSmall.transform.localRotation = Quaternion.identity;
-         HeldItemSmall.GetComponent<Rigidbody>().isKinematic = true;
+        HeldItemSmall.GetComponent<Rigidbody>().isKinematic = true;
         HeldItemSmall.SetActive(false);
         Debug.Log("minSize");
         holdObjSmall = true;
        
     }
-   
     public void ScaleShrinkGrow()
     {
         if (Input.GetButton("Fire1"))
@@ -381,8 +386,6 @@ public class GunScript : MonoBehaviour
 
 
     }
-
-
     void CheckSize()
     {
         if (CurrentSize.magnitude > PminSize.magnitude)
@@ -409,7 +412,6 @@ public class GunScript : MonoBehaviour
 
         }
     }
-
     void ObjectHold()
     {
         RaycastHit hitO;
@@ -432,7 +434,6 @@ public class GunScript : MonoBehaviour
 
         }
     }
-
     void LaserCast()
     {
         if (isShooting == true && ControlLayers == false)
@@ -450,10 +451,7 @@ public class GunScript : MonoBehaviour
 
         }
 
-    }
-    
-       
-    
+    }   
     private void OnTriggerStay(Collider col)
     {
         if (col.CompareTag("ShrinkVolume"))
@@ -471,7 +469,6 @@ public class GunScript : MonoBehaviour
         }
 
     }
-
     private void OnTriggerExit(Collider col)
     {
         if (col.CompareTag("ShrinkVolume") || col.CompareTag("GrowVolume"))
@@ -480,6 +477,22 @@ public class GunScript : MonoBehaviour
 
 
         }
+    }
+    void SetSpawnPoint()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
+        {
+            Debug.Log("Wheel");
+            StaffPoint.gameObject.transform.localPosition = new Vector3(StaffPoint.gameObject.transform.localPosition.x, StaffPoint.gameObject.transform.localPosition.y, StaffPoint.gameObject.transform.localPosition.z + StaffpointLOC);
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
+        {
+            Debug.Log("Wheel");
+            StaffPoint.gameObject.transform.localPosition = new Vector3(StaffPoint.gameObject.transform.localPosition.x, StaffPoint.gameObject.transform.localPosition.y, StaffPoint.gameObject.transform.localPosition.z - StaffpointLOC);
+        }
+
+
+
     }
 }
 
