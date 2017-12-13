@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> Keys;
     public int OBJNumber, OBJFinal;
     public UnityEvent Win;
-
+    string CurrentScene;
     public float playerClicks = 10;
 
 
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
     }
 	public void Start()
 	{
-        
+        CurrentScene = SceneManager.GetActiveScene().name;
    
 	}
     void MassTooLow()
@@ -44,19 +44,35 @@ public class GameManager : MonoBehaviour {
 		yield return new WaitForSeconds (time);
 		SceneManager.LoadScene ("2");
 	}
-	void setMatterText()
+    IEnumerator WinAfterTime2(float time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene("Menu");
+    }
+    void setMatterText()
 	{if (isTut == false)
         {
 			MatterText.text = "Matter Available: " + MassAvailable.ToString ();
 		}
 	}
 
+
     void CheckOBJs()
     {
-        if(OBJNumber >= OBJFinal)
+        if (OBJNumber >= OBJFinal)
         {
-            Win.Invoke();
-            StartCoroutine(WinAfterTime(2f));
+            if (CurrentScene == "2")
+            {
+                Win.Invoke();
+                StartCoroutine(WinAfterTime2(2f));
+
+            }
+            if(CurrentScene == "1")
+            {
+                Win.Invoke();
+                StartCoroutine(WinAfterTime(2f));
+
+            }
         }
 
 

@@ -1,4 +1,6 @@
-﻿using UnityEngine.Events;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Animations;
@@ -29,13 +31,16 @@ public class GunScript : MonoBehaviour
     [SerializeField] Animator StaffANIM;
     public GameObject Staff;
     [SerializeField] bool TranGP, TranGO, TranSP, TranSO, IsGrowing, IsShrinking, IsGrowingP, IsShrinkingP;
-    public UnityEvent UpSound, DownSound, ShowCube, PlaceCube, FreezeCube, PlayerUP, PlayerDown, Wipe;
+    public UnityEvent UpSound, DownSound, ShowCube, PlaceCube, FreezeCube, PlayerUP, PlayerDown, Wipe, Dead;
     public bool EGrowing, EShrinking, EventRunning;
     public LineRenderer LineRend;
     GameObject HitObject;
     public GameObject StaffPoint, StaffVis;
     bool isShooting;
     Vector3 OBJLOC;
+    ParticleSystem Box;
+   
+
     void Start()
     {
        LineRend.enabled = false;
@@ -57,7 +62,7 @@ public class GunScript : MonoBehaviour
         CheckSize();
         SetControlLayers();
         CheckControlLayer();
-        Size.value = CurrentSize.magnitude;
+       
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
         {
             Debug.Log("Wheel");
@@ -84,6 +89,7 @@ public class GunScript : MonoBehaviour
         }     
         PlaceItemDeactivated();
         LaserCast();
+        Size.value = CurrentSize.magnitude;
     }
     void PlaceItemDeactivated()
     {
@@ -320,8 +326,9 @@ public class GunScript : MonoBehaviour
             {
 
                 Debug.Log("DeadByLorge");
-                SceneManager.LoadScene("Died");
-                
+                Dead.Invoke();
+                StartCoroutine(DiedDead(2f));
+
 
             }
         }
@@ -369,7 +376,9 @@ public class GunScript : MonoBehaviour
             {
 
                 Debug.Log("DeadBySmol");
-                SceneManager.LoadScene("Died");
+                Dead.Invoke();
+                StartCoroutine(DiedDead(2f));
+                
 
             }
 
@@ -420,13 +429,14 @@ public class GunScript : MonoBehaviour
             {
 
                 hitO.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                hitO.transform.gameObject.GetComponent<ParticleSystem>().Emit(50);
                 Lev = false;
             }
             else
             {
 
                hitO.transform.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                
+                hitO.transform.gameObject.GetComponent<ParticleSystem>().Emit(50);
                 Lev = true;
             }
 
@@ -477,7 +487,14 @@ public class GunScript : MonoBehaviour
 
         }
     }
- 
+    
+
+    IEnumerator DiedDead(float time)
+    {
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene("Menu");
+    }
+
 }
 
 
