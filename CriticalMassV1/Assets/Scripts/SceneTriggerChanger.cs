@@ -26,9 +26,20 @@ public class SceneTriggerChanger : MonoBehaviour {
 		SceneManager.LoadScene ("1");
 
 	}
-    public void PlayGame2()
+    public void Instructions()
     {
-        SceneManager.LoadScene("2");
+        SceneManager.LoadScene("Ins");
+
+    }
+    public void Quit()
+    {
+        Application.Quit();
+
+    }
+
+    public void Death()
+    {
+        SceneManager.LoadScene("Death");
 
     }
 }

@@ -21,7 +21,7 @@ public class OBJrbIND : MonoBehaviour {
     {if(inOBJ == true)
         {
             rb.isKinematic = true;
-            this.gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+            this.gameObject.transform.localScale = new Vector3(.2f, .2f, .2f);
         }
         
 

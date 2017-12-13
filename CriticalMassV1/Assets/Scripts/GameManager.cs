@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
 
@@ -15,15 +16,11 @@ public class GameManager : MonoBehaviour {
     public int NumberOfKeys;
     public List<GameObject> Keys;
     public int OBJNumber, OBJFinal;
+    public UnityEvent Win;
 
     public float playerClicks = 10;
 
-	/*void CheckClicks()
-	{if (playerClicks >= 10f) {
-			Instantiate (Explosions);
-			StartCoroutine (ExplodeAfterTime (1));
-		}
-	}*/
+
     private void Update()
     {
 	
@@ -34,14 +31,7 @@ public class GameManager : MonoBehaviour {
 	public void Start()
 	{
         
-        Scene curScene = SceneManager.GetActiveScene();
-		string sceneName = curScene.name;
-		if (sceneName != "Tutorial1") {
-			isTut = false;
-		}
-		if (sceneName == "Tutorial1") {
-			isTut = true;
-		}
+   
 	}
     void MassTooLow()
     {if(MassAvailable < 0)
@@ -49,10 +39,10 @@ public class GameManager : MonoBehaviour {
             MassAvailable = 0f;
         }
     }
-	IEnumerator ExplodeAfterTime(float time)
+	IEnumerator WinAfterTime(float time)
 	{
 		yield return new WaitForSeconds (time);
-		SceneManager.LoadScene ("1");
+		SceneManager.LoadScene ("2");
 	}
 	void setMatterText()
 	{if (isTut == false)
@@ -65,8 +55,8 @@ public class GameManager : MonoBehaviour {
     {
         if(OBJNumber >= OBJFinal)
         {
-            SceneManager.LoadScene("Menu");
-
+            Win.Invoke();
+            StartCoroutine(WinAfterTime(2f));
         }
 
 

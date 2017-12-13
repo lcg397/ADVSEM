@@ -1,6 +1,5 @@
 ﻿using UnityEngine.Events;
 using UnityEngine;
-using ProBuilder2.MeshOperations;
 using UnityEngine.UI;
 using UnityEngine.Animations;
 using UnityEngine.SceneManagement;
@@ -34,7 +33,7 @@ public class GunScript : MonoBehaviour
     public bool EGrowing, EShrinking, EventRunning;
     public LineRenderer LineRend;
     GameObject HitObject;
-    public GameObject StaffPoint;
+    public GameObject StaffPoint, StaffVis;
     bool isShooting;
     Vector3 OBJLOC;
     void Start()
@@ -439,7 +438,7 @@ public class GunScript : MonoBehaviour
         if (isShooting == true && ControlLayers == false)
         {
             LineRend.enabled = true;
-            LineRend.SetPosition(0, StaffPoint.transform.position);
+            LineRend.SetPosition(0, StaffVis.transform.position);
             LineRend.SetPosition(1, OBJLOC);
 
 
@@ -478,22 +477,7 @@ public class GunScript : MonoBehaviour
 
         }
     }
-    void SetSpawnPoint()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
-        {
-            Debug.Log("Wheel");
-            StaffPoint.gameObject.transform.localPosition = new Vector3(StaffPoint.gameObject.transform.localPosition.x, StaffPoint.gameObject.transform.localPosition.y, StaffPoint.gameObject.transform.localPosition.z + StaffpointLOC);
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
-        {
-            Debug.Log("Wheel");
-            StaffPoint.gameObject.transform.localPosition = new Vector3(StaffPoint.gameObject.transform.localPosition.x, StaffPoint.gameObject.transform.localPosition.y, StaffPoint.gameObject.transform.localPosition.z - StaffpointLOC);
-        }
-
-
-
-    }
+ 
 }
 
 
