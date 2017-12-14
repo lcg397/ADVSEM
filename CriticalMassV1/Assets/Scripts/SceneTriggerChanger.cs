@@ -9,7 +9,7 @@ public class SceneTriggerChanger : MonoBehaviour {
 	{if (col.transform.gameObject.name == "Player")
         {
 
-            SceneManager.LoadScene("Died");
+            SceneManager.LoadScene("2");
 
         }
 

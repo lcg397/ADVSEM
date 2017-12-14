@@ -39,6 +39,8 @@ public class GunScript : MonoBehaviour
     bool isShooting;
     Vector3 OBJLOC;
     ParticleSystem Box;
+    Scene SceneCur;
+    string SCCUR;
    
 
     void Start()
@@ -47,9 +49,13 @@ public class GunScript : MonoBehaviour
        minSize = new Vector3(.2f, .2f, .2f);
        ControlLayers = false;
        StaffANIM = Staff.GetComponent<Animator>();
+        SceneCur = SceneManager.GetActiveScene();
+        SCCUR = SceneCur.ToString();
+
     }
     void Update()
     {
+       
         TranGP = Staff.GetComponent<AnimationControlStaff>().ATranGP;
         TranGO = Staff.GetComponent<AnimationControlStaff>().ATranGO;
         TranSP = Staff.GetComponent<AnimationControlStaff>().ATranSP;
@@ -62,9 +68,17 @@ public class GunScript : MonoBehaviour
         CheckSize();
         SetControlLayers();
         CheckControlLayer();
-       
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
+            SceneManager.LoadScene(SCCUR);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SceneManager.LoadScene("Menu");
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
+        { 
             Debug.Log("Wheel");
             StaffPoint.gameObject.transform.localPosition = new Vector3(StaffPoint.gameObject.transform.localPosition.x, StaffPoint.gameObject.transform.localPosition.y, StaffPoint.gameObject.transform.localPosition.z + StaffpointLOC);
         }
@@ -132,10 +146,18 @@ public class GunScript : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
         {
             ControlLayers = true;
+            StaffANIM.SetBool("TranGrowO", false);
+            StaffANIM.SetBool("IsGrowingOBJ", false);
+            StaffANIM.SetBool("TranGrowP", false);
+            StaffANIM.SetBool("IsGrowingP", false);
         }
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             ControlLayers = false;
+            StaffANIM.SetBool("TranGrowO", false);
+            StaffANIM.SetBool("IsGrowingOBJ", false);
+            StaffANIM.SetBool("TranGrowP", false);
+            StaffANIM.SetBool("IsGrowingP", false);
         }
     }
     void CheckControlLayer()
@@ -492,7 +514,7 @@ public class GunScript : MonoBehaviour
     IEnumerator DiedDead(float time)
     {
         yield return new WaitForSeconds(time);
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(SCCUR);
     }
 
 }
