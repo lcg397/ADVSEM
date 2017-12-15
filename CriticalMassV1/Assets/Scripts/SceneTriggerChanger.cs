@@ -31,6 +31,11 @@ public class SceneTriggerChanger : MonoBehaviour {
         SceneManager.LoadScene("Ins");
 
     }
+    public void Instructions2()
+    {
+        SceneManager.LoadScene("Ins2");
+
+    }
     public void Quit()
     {
         Application.Quit();
