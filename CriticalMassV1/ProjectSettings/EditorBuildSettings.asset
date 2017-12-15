@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Final/Ins2.unity
     guid: 004d68d92208acf46b26dfaa59b1654c
   - enabled: 1
-    path: Assets/Scenes/Final/1.unity
+    path: Assets/Scenes/Final/Level1.unity
     guid: ad1c049f8bb3605409e1674ec07993ec
   - enabled: 1
-    path: Assets/Scenes/Final/2.unity
+    path: Assets/Scenes/Final/Level2.unity
     guid: 1ac81b380fb99e446a2dda3a9c780d6d

@@ -39,8 +39,8 @@ public class GunScript : MonoBehaviour
     bool isShooting;
     Vector3 OBJLOC;
     ParticleSystem Box;
-    Scene SceneCur;
-    string SCCUR;
+   public  Scene SceneCur;
+    public string SCCUR;
    
 
     void Start()
@@ -49,13 +49,18 @@ public class GunScript : MonoBehaviour
        minSize = new Vector3(.2f, .2f, .2f);
        ControlLayers = false;
        StaffANIM = Staff.GetComponent<Animator>();
-        SceneCur = SceneManager.GetActiveScene();
-        SCCUR = SceneCur.ToString();
+      
+      
 
     }
     void Update()
     {
+        SceneCur = SceneManager.GetActiveScene();
+        Debug.Log(SceneCur.name);
        
+        SCCUR = SceneCur.ToString();
+    
+
         TranGP = Staff.GetComponent<AnimationControlStaff>().ATranGP;
         TranGO = Staff.GetComponent<AnimationControlStaff>().ATranGO;
         TranSP = Staff.GetComponent<AnimationControlStaff>().ATranSP;
@@ -70,7 +75,7 @@ public class GunScript : MonoBehaviour
         CheckControlLayer();
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(SCCUR);
+            SceneManager.LoadScene(SceneCur.name);
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -349,7 +354,7 @@ public class GunScript : MonoBehaviour
 
                 Debug.Log("DeadByLorge");
                 Dead.Invoke();
-                StartCoroutine(DiedDead(2f));
+                StartCoroutine(DiedDead(.5f));
 
 
             }
@@ -399,7 +404,7 @@ public class GunScript : MonoBehaviour
 
                 Debug.Log("DeadBySmol");
                 Dead.Invoke();
-                StartCoroutine(DiedDead(2f));
+                StartCoroutine(DiedDead(.5f));
                 
 
             }
@@ -509,12 +514,23 @@ public class GunScript : MonoBehaviour
 
         }
     }
-    
+
 
     IEnumerator DiedDead(float time)
     {
         yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(SCCUR);
+        if (SceneCur.name == "Level1")
+
+        {
+            Debug.Log(SCCUR);
+            SceneManager.LoadScene("Level1");
+        }
+        if (SceneCur.name == "Level2")
+
+        {
+            Debug.Log(SCCUR);
+            SceneManager.LoadScene("Level2");
+        }
     }
 
 }

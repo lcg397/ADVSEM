@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour {
 	IEnumerator WinAfterTime(float time)
 	{
 		yield return new WaitForSeconds (time);
-		SceneManager.LoadScene ("2");
+		SceneManager.LoadScene ("Level2");
 	}
     IEnumerator WinAfterTime2(float time)
     {
@@ -61,13 +61,13 @@ public class GameManager : MonoBehaviour {
     {
         if (OBJNumber >= OBJFinal)
         {
-            if (CurrentScene == "2")
+            if (CurrentScene == "Level2")
             {
                 Win.Invoke();
                 StartCoroutine(WinAfterTime2(2f));
 
             }
-            if(CurrentScene == "1")
+            if(CurrentScene == "Level1")
             {
                 Win.Invoke();
                 StartCoroutine(WinAfterTime(2f));

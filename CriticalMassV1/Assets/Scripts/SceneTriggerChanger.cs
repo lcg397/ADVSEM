@@ -9,7 +9,7 @@ public class SceneTriggerChanger : MonoBehaviour {
 	{if (col.transform.gameObject.name == "Player")
         {
 
-            SceneManager.LoadScene("2");
+            SceneManager.LoadScene("Level2");
 
         }
 
@@ -23,7 +23,7 @@ public class SceneTriggerChanger : MonoBehaviour {
 
 	public void PlayGame1()
 	{
-		SceneManager.LoadScene ("1");
+		SceneManager.LoadScene ("Level1");
 
 	}
     public void Instructions()

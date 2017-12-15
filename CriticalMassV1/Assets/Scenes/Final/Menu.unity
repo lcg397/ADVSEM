@@ -765,7 +765,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 929211208}
-        m_MethodName: PlayGame1
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1617,7 +1617,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Quit (Q)
+  m_Text: Quit
 --- !u!222 &425347334
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6131,7 +6131,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1816631595}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -8.4, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 0.1323078, y: 0.13230778, z: 0.13230778}
   m_Children: []
   m_Father: {fileID: 244260611}
@@ -6139,7 +6139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -8.4}
+  m_AnchoredPosition: {x: 0, y: -2}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1816631597
@@ -6174,9 +6174,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Play (P)
-
-'
+  m_Text: Play
 --- !u!222 &1816631598
 CanvasRenderer:
   m_ObjectHideFlags: 0
